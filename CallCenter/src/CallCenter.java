@@ -7,10 +7,11 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class CallCenter {
-    public final static int totalCustomers = 20;
-    public final static int totalAgents = 2;
+    public final static int totalCustomers = 30;
+    public final static int totalAgents = 3;
     // shared data
     private final static Queue<Integer> queue = new LinkedList<>();
+    private final static Queue<Integer> serviceQueue = new LinkedList<>();
     private final static ReentrantLock qLock = new ReentrantLock();
     private final static Condition queueNotEmpty = qLock.newCondition();
 
