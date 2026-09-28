@@ -7,7 +7,7 @@ public class Customer implements Runnable{
 
 
     public void run(){
-        CallCenter.addCall(ID);
-        System.out.println("Customer " + "ID" + " enters the queue");
+        CallCenter.addToArrival(ID);
+        System.out.println("Customer " + ID + " enters the arrival queue");
     }
 }
