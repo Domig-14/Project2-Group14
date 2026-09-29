@@ -10,35 +10,36 @@ public class CallCenter {
     public final static int totalCustomers = 30;
     public final static int totalAgents = 3;
     // shared data
+
+    // arrival queue
     private final static Queue<Integer> queue = new LinkedList<>();
     private final static Queue<Integer> serviceQueue = new LinkedList<>();
-    private final static ReentrantLock qLock = new ReentrantLock();
-    private final static Condition queueNotEmpty = qLock.newCondition();
+    private final static ReentrantLock arrivalLock = new ReentrantLock();
+    private final static Condition arrivalNotEmpty = arrivalLock.newCondition();
 
-    public static void addCall(int customerID){
-        qLock.lock();
+    public static void addToArrival(int customerID){
+        arrivalLock.lock();
         try {
             //critical section
             queue.add(customerID);
-            queueNotEmpty.signal();
+            arrivalNotEmpty.signal();
         }
         finally {
-            qLock.unlock();
+            arrivalLock.unlock();
         }
     }
 
-    public static int takeCall() throws Exception{
+    public static int takeFromArrival() throws Exception{
         int customerID;
-        qLock.lock();
+        arrivalLock.lock();
         try {
             while (queue.isEmpty()) {
-                // await() releases the qLock
-                // put the thread to sleep
-                queueNotEmpty.await();
+
+                arrivalNotEmpty.await();
             }
             customerID = queue.remove();
         }finally{
-            qLock.unlock();
+            arrivalLock.unlock();
         }
         return customerID;
 

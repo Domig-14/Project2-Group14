@@ -1,16 +1,23 @@
-public class Greeter {
+import java.util.concurrent.ThreadLocalRandom;
 
-    public void Greet{
+public class Greeter implements Runnable{
 
+    public void run(){
+        int customerID;
+        for(int i = 0; i < CallCenter.totalCustomers; i++){
+            try{
+                customerID = CallCenter.takeFromArrival();
+                Thread.sleep(ThreadLocalRandom.current().nextInt(20 , 200));
+
+                //CallCenter.addToService(customerID);
+
+                // Can reword message later just for placement
+                System.out.println("Customer " + customerID + " has been placed into the service queue");
+
+
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }// close for loop
     }
-
-    //Remove Customer ID from arrival queue
-
-    //Simulate Greeting the customer by sleeping for a random duration (20-200ms)
-
-    //Place the customer ID into the Service queue
-
-    //Announce customer's place in service queue by printing short message
-
-    //Repeat until all customers have been greeted and placed in service queue, then exit
 }
