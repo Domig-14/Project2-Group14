@@ -69,7 +69,7 @@ public class CallCenter {
 
             serviceNotEmpty.await();
         }
-        customerID = queue.remove();
+        customerID = serviceQueue.remove();
         System.out.println("ALERT: Customer " + customerID + " has been removed from service queue");
 
         return customerID;
